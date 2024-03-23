@@ -7,13 +7,11 @@ type ColorModeContextType = {
   setMode: (mode: string) => void;
 };
 
-export const ColorModeContext = createContext<ColorModeContextType>(
+export const Context = createContext<ColorModeContextType>(
   {} as ColorModeContextType
 );
 
-export const ColorModeContextProvider: React.FC<PropsWithChildren> = ({
-  children,
-}) => {
+export const Provider: React.FC<PropsWithChildren> = ({ children }) => {
   const colorModeFromLocalStorage = localStorage.getItem("colorMode");
   const isSystemPreferenceDark = window?.matchMedia(
     "(prefers-color-scheme: dark)"
@@ -39,7 +37,7 @@ export const ColorModeContextProvider: React.FC<PropsWithChildren> = ({
   const { darkAlgorithm, defaultAlgorithm } = theme;
 
   return (
-    <ColorModeContext.Provider
+    <Context.Provider
       value={{
         setMode: setColorMode,
         mode,
@@ -54,6 +52,6 @@ export const ColorModeContextProvider: React.FC<PropsWithChildren> = ({
       >
         {children}
       </ConfigProvider>
-    </ColorModeContext.Provider>
+    </Context.Provider>
   );
 };

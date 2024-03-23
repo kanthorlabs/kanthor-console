@@ -4,7 +4,9 @@ export const passport: IPassport = {
   strategy: import.meta.env.VITE_KANTHOR_PASSPORT_STRATEGY || "",
   username: import.meta.env.VITE_KANTHOR_PASSPORT_USERNAME || "",
   password: import.meta.env.VITE_KANTHOR_PASSPORT_PASSWORD || "",
-  remember: Number(import.meta.env.VITE_KANTHOR_PASSPORT_REMEMBER || "") || 7,
+  remember:
+    Number(import.meta.env.VITE_KANTHOR_PASSPORT_REMEMBER || "") ||
+    7 * 24 * 60 * 60,
   strategies: {
     ask: {
       name: import.meta.env.VITE_KANTHOR_PASSPORT_STRATEGIES_ASK_NAME || "",

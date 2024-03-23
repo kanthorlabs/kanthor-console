@@ -10,6 +10,17 @@ const portal = [
       icon: <DashboardOutlined />,
     },
   },
+  {
+    name: "workspace",
+    list: "/workspace",
+    create: "/workspace/create",
+    edit: "/workspace/edit/:id",
+    show: "/workspace/show/:id",
+    meta: {
+      dataProviderName: "portal",
+      hide: true,
+    },
+  },
 ];
 
 export const resources = [...portal];

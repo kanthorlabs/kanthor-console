@@ -4,6 +4,7 @@ import {
   CheckResponse,
   OnErrorResponse,
   IdentityResponse,
+  PermissionResponse,
 } from "@refinedev/core/dist/interfaces";
 
 import * as configs from "@console/configs";
@@ -12,7 +13,7 @@ import persistence, { withTtl } from "@console/utils/persistence";
 import { IAccount, IMap } from "@console/interfaces";
 import { KEY_ACCOUNT, KEY_ACCOUNT_AUTHORIZATION } from "./constants";
 
-export class Ask implements AuthBindings {
+export class Ask implements Required<AuthBindings> {
   public static name: string = "ask";
 
   public async login({
@@ -26,7 +27,7 @@ export class Ask implements AuthBindings {
     };
 
     const { account, error } = await httpc
-      .get(`${configs.api.portal.uri}/account`, options)
+      .get(`${configs.api.portal.uri}/api/account`, options)
       .then((r) => ({ account: r.data as IAccount, error: null }))
       .catch((error: Error) => ({ account: null, error }));
 
@@ -63,7 +64,7 @@ export class Ask implements AuthBindings {
       headers: { Authorization: authorization },
     };
     const error = await httpc
-      .get(`${configs.api.portal.uri}/account`, options)
+      .get(`${configs.api.portal.uri}/api/account`, options)
       .then((r) => undefined)
       .catch((error: Error) => error);
 
@@ -75,11 +76,27 @@ export class Ask implements AuthBindings {
   }
 
   public async getIdentity(params?: any): Promise<IdentityResponse> {
-    const { data: account, error } = persistence.get<IAccount>(
-      KEY_ACCOUNT_AUTHORIZATION
-    );
+    const { data: account, error } = persistence.get<IAccount>(KEY_ACCOUNT);
 
     if (error) throw error;
     return account;
+  }
+
+  public async getPermissions(
+    params?: Record<string, any>
+  ): Promise<PermissionResponse> {
+    return null;
+  }
+
+  public async updatePassword(params: any): Promise<AuthActionResponse> {
+    return { success: false };
+  }
+
+  public async forgotPassword(params: any): Promise<AuthActionResponse> {
+    return { success: false };
+  }
+
+  public async register(params: any): Promise<AuthActionResponse> {
+    return { success: false };
   }
 }

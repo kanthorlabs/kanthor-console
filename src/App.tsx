@@ -18,7 +18,9 @@ import {
   Outlet,
   Navigate,
 } from "react-router-dom";
-import { ColorModeContextProvider } from "./contexts/color-mode";
+import * as contexts from "@console/contexts";
+import * as configs from "@console/configs";
+import httpc from "@console/utils/httpc";
 import * as providers from "@console/providers";
 import * as layouts from "@console/layouts";
 import * as pages from "@console/pages";
@@ -28,10 +30,14 @@ function App() {
   return (
     <BrowserRouter>
       <RefineKbarProvider>
-        <ColorModeContextProvider>
+        <contexts.colormode.Provider>
           <AntdApp>
             <Refine
-              dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
+              dataProvider={{
+                default: providers.Api(configs.api.portal.uri, httpc),
+                portal: providers.Api(configs.api.portal.uri, httpc),
+                sdk: providers.Api(configs.api.sdk.uri, httpc),
+              }}
               notificationProvider={useNotificationProvider}
               routerProvider={routerBindings}
               authProvider={providers.auth}
@@ -49,11 +55,32 @@ function App() {
                       key="authenticated-inner"
                       fallback={<CatchAllNavigate to="/auth/login" />}
                     >
-                      <layouts.InnerLayout />
+                      <layouts.OuterLayout />
                     </Authenticated>
                   }
                 >
-                  <Route index element={<WelcomePage />} />
+                  <Route path="/workspace">
+                    <Route index element={<pages.workspace.List />} />
+                    <Route path="create" element={<pages.workspace.Create />} />
+                    <Route path="edit/:id" element={<pages.workspace.Edit />} />
+                    <Route path="show/:id" element={<pages.workspace.Show />} />
+                  </Route>
+                </Route>
+
+                <Route
+                  element={
+                    <Authenticated
+                      key="authenticated-inner"
+                      fallback={<CatchAllNavigate to="/auth/login" />}
+                    >
+                      <contexts.workspace.Provider>
+                        <layouts.InnerLayout />
+                      </contexts.workspace.Provider>
+                    </Authenticated>
+                  }
+                >
+                  <Route index element={<pages.dashboard.Dashboard />} />
+                  <Route path="/account" element={<pages.account.Account />} />
                 </Route>
 
                 <Route
@@ -82,7 +109,7 @@ function App() {
               <DocumentTitleHandler />
             </Refine>
           </AntdApp>
-        </ColorModeContextProvider>
+        </contexts.colormode.Provider>
       </RefineKbarProvider>
     </BrowserRouter>
   );

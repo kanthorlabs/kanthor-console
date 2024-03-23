@@ -1,5 +1,6 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
+import { Spin } from "antd";
 
 import App from "./App";
 
@@ -8,7 +9,7 @@ const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <React.Suspense fallback="loading...">
+    <React.Suspense fallback={<Spin fullscreen />}>
       <App />
     </React.Suspense>
   </React.StrictMode>

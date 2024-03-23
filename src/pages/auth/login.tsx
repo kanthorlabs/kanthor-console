@@ -15,11 +15,7 @@ export const Login = () => {
   const isexternal = configs.passport.strategy === External.name;
   if (isexternal) {
     props.registerLink = (
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
+      <div style={{ marginTop: 8 }}>
         <Typography.Text style={{ fontSize: 12 }}>
           Don’t have an account?{" "}
           <Link
