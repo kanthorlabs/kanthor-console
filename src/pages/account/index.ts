@@ -1,1 +1,0 @@
-export { AccountProfile } from "./profile";
