@@ -11,7 +11,11 @@ import * as configs from "@console/configs";
 import httpc from "@console/utils/httpc";
 import persistence, { withTtl } from "@console/utils/persistence";
 import { IAccount, IMap } from "@console/interfaces";
-import { KEY_ACCOUNT, KEY_ACCOUNT_AUTHORIZATION } from "./constants";
+import {
+  KEY_ACCOUNT,
+  KEY_ACCOUNT_AUTHORIZATION,
+  KEY_TENANT_ID,
+} from "./constants";
 
 export class Ask implements Required<AuthBindings> {
   public static name: string = "ask";
@@ -49,6 +53,7 @@ export class Ask implements Required<AuthBindings> {
   public async logout(params: any): Promise<AuthActionResponse> {
     persistence.del(KEY_ACCOUNT);
     persistence.del(KEY_ACCOUNT_AUTHORIZATION);
+    persistence.del(KEY_TENANT_ID);
     return {
       success: true,
     };

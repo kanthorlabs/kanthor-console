@@ -1,10 +1,10 @@
 import React from "react";
 import { IResourceComponentsProps, useGetIdentity } from "@refinedev/core";
-import { Card, Spin, Typography } from "antd";
+import { Card, Typography } from "antd";
 import { DateField, TextField } from "@refinedev/antd";
-const { Title } = Typography;
+import { IAccount } from "@console/interfaces";
 
-import { IAccount } from "../../interfaces";
+const { Title } = Typography;
 
 export const Account: React.FC<IResourceComponentsProps> = () => {
   const { data: user, isLoading } = useGetIdentity<IAccount>();

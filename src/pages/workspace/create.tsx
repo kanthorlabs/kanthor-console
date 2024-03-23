@@ -2,7 +2,7 @@ import React from "react";
 import { IResourceComponentsProps, useParsed } from "@refinedev/core";
 import { Create as CoreCreate, useForm } from "@refinedev/antd";
 import { Form, Input } from "antd";
-import { IWorkspace } from "../../interfaces";
+import { IWorkspace } from "@console/interfaces";
 
 export const Create: React.FC<IResourceComponentsProps> = ({}) => {
   const { params } = useParsed<{ name?: string }>();

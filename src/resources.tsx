@@ -1,4 +1,4 @@
-import { DashboardOutlined } from "@ant-design/icons";
+import { DashboardOutlined, AppstoreOutlined } from "@ant-design/icons";
 
 const portal = [
   {
@@ -23,4 +23,18 @@ const portal = [
   },
 ];
 
-export const resources = [...portal];
+const sdk = [
+  {
+    name: "application",
+    list: "/application",
+    create: "/application/create",
+    edit: "/application/edit/:id",
+    show: "/application/show/:id",
+    meta: {
+      dataProviderName: "sdk",
+      label: "Applications",
+      icon: <AppstoreOutlined />,
+    },
+  },
+];
+export const resources = [...portal, ...sdk];
