@@ -1,11 +1,10 @@
+import { IAuditable } from "./common";
+
 export enum ConditionSource {
   TYPE = "type",
 }
 
-export interface IRoute {
-  id: string;
-  created_at: number;
-  updated_at: number;
+export interface IRoute extends IAuditable {
   ep_id: string;
   name: string;
   priority: number;

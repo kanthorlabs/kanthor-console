@@ -7,8 +7,9 @@ import React, {
 import { useDataProvider, useParsed } from "@refinedev/core";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Spin } from "antd";
-import { IWorkspace } from "@console/interfaces";
+import * as constants from "@console/constants";
 import persistence from "@console/utils/persistence";
+import { IWorkspace } from "@console/interfaces";
 import { KEY_TENANT_ID } from "@console/providers/auth/constants";
 
 type IWorkspaceContext = {
@@ -25,16 +26,17 @@ export const Provider: React.FC<PropsWithChildren> = ({ children }) => {
   const navigate = useNavigate();
   const [available, setAvailable] = useState<IWorkspace[]>([]);
   const [selected, setSelected] = useState<IWorkspace>();
-  const { getList } = useDataProvider()("portal");
+  const { getList } = useDataProvider()(constants.PROVIDER_PORTAL);
 
   const { params } = useParsed<{ ws_id?: string }>();
-  const id = params?.ws_id || localStorage.getItem("ws_id");
-  const [isLoading, setIsLoading] = React.useState(!!id);
+  const { data: tenantId } = persistence.get(KEY_TENANT_ID);
+  const id = params?.ws_id || tenantId;
+  const [isLoading, setIsLoading] = React.useState(true);
 
   useEffect(() => {
-    if (!id) return;
+    if (selected) return;
 
-    getList({ resource: "workspace", pagination: { mode: "off" } })
+    getList({ resource: constants.RESOURCE_WS, pagination: { mode: "off" } })
       .then(({ data }) => {
         setAvailable(data as any[]);
         const picked = (data as any[]).find((ws: IWorkspace) => ws.id === id);
@@ -50,14 +52,11 @@ export const Provider: React.FC<PropsWithChildren> = ({ children }) => {
     if (selected) persistence.set(KEY_TENANT_ID, selected.id);
   }, [selected]);
 
-  if (isLoading) {
-    return <Spin fullscreen />;
-  }
-  if (!selected) {
-    return <Navigate to="/workspace" />;
-  }
+  if (isLoading) return <Spin fullscreen />;
+  if (!available.length) return <Navigate to="/workspace" />;
 
   const select = (picked: IWorkspace) => {
+    setSelected(picked);
     persistence.set(KEY_TENANT_ID, picked.id);
     navigate(0);
   };

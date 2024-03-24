@@ -1,7 +1,6 @@
-export interface IWorkspace {
-  id: string;
-  created_at: number;
-  updated_at: number;
+import { IAuditable } from "./common";
+
+export interface IWorkspace extends IAuditable {
   owner_id: string;
   name: string;
   tier: string;

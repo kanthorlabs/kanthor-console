@@ -23,6 +23,7 @@ export const WorkspaceSelector: React.FC<
   const items: MenuProps["items"] = available.map((ws) => ({
     key: ws.id,
     label: ws.name,
+    disabled: ws.id == selected?.id,
     icon:
       ws.owner_id === identity?.username ? (
         <CrownOutlined />

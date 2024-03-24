@@ -9,7 +9,6 @@ import routerBindings, {
   DocumentTitleHandler,
   UnsavedChangesNotifier,
 } from "@refinedev/react-router-v6";
-import dataProvider from "@refinedev/simple-rest";
 import { App as AntdApp } from "antd";
 import {
   BrowserRouter,
@@ -18,6 +17,7 @@ import {
   Outlet,
   Navigate,
 } from "react-router-dom";
+import * as constants from "@console/constants";
 import * as contexts from "@console/contexts";
 import * as configs from "@console/configs";
 import httpc from "@console/utils/httpc";
@@ -35,8 +35,14 @@ function App() {
             <Refine
               dataProvider={{
                 default: providers.Api(configs.api.portal.uri, httpc),
-                portal: providers.Api(configs.api.portal.uri, httpc),
-                sdk: providers.Api(configs.api.sdk.uri, httpc),
+                [constants.PROVIDER_PORTAL]: providers.Api(
+                  configs.api.portal.uri,
+                  httpc
+                ),
+                [constants.PROVIDER_SDK]: providers.Api(
+                  configs.api.sdk.uri,
+                  httpc
+                ),
               }}
               notificationProvider={useNotificationProvider}
               routerProvider={routerBindings}
@@ -96,6 +102,20 @@ function App() {
                       path="show/:id"
                       element={<pages.application.Show />}
                     />
+                  </Route>
+
+                  <Route path="/endpoint">
+                    <Route index element={<pages.endpoint.List />} />
+                    <Route path="create" element={<pages.endpoint.Create />} />
+                    <Route path="edit/:id" element={<pages.endpoint.Edit />} />
+                    <Route path="show/:id" element={<pages.endpoint.Show />} />
+                  </Route>
+
+                  <Route path="/route">
+                    <Route index element={<pages.route.List />} />
+                    <Route path="create" element={<pages.route.Create />} />
+                    <Route path="edit/:id" element={<pages.route.Edit />} />
+                    <Route path="show/:id" element={<pages.route.Show />} />
                   </Route>
                 </Route>
 

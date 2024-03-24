@@ -1,6 +1,5 @@
-export interface IApplication {
-  id: string;
-  created_at: number;
-  updated_at: number;
+import { IAuditable } from "./common";
+
+export interface IApplication extends IAuditable {
   name: string;
 }

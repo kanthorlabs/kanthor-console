@@ -23,6 +23,8 @@ export function headers(meta?: MetaQuery): IMap {
   return { ...{ ...meta }.headers };
 }
 
+const ids = ["app_id", "ws_id", "ep_id"];
+
 export function query(
   meta?: MetaQuery,
   filters?: CrudFilters,
@@ -30,8 +32,8 @@ export function query(
 ): IMap {
   const queries: IMap = { ...generateFilter(filters) };
 
-  if (meta && meta["app_id"]) {
-    queries.app_id = meta["app_id"];
+  if (meta) {
+    for (let id of ids) if (meta[id]) queries[id] = meta[id];
   }
 
   if (pagination) {
@@ -50,12 +52,23 @@ export function url(base: string, queries: IMap): string {
   for (let key in queries) {
     const value = queries[key];
     if (Array.isArray(value)) {
-      for (let v of value) {
-        url.searchParams.append(key, stringify(v));
-      }
+      for (let v of value) set(url, key, v);
+      continue;
     }
 
-    url.searchParams.append(key, stringify(queries[key]));
+    set(url, key, value);
   }
   return url.toString();
+}
+
+function set(url: URL, key: string, value: any) {
+  if (typeof value === "string") {
+    url.searchParams.append(key, value);
+    return;
+  }
+  if (typeof value === "number" || typeof value === "boolean") {
+    url.searchParams.append(key, String(value));
+    return;
+  }
+  url.searchParams.append(key, stringify(value));
 }
