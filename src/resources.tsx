@@ -23,6 +23,12 @@ const portal = [
       hide: true,
     },
   },
+  {
+    ...resource(constants.RESOURCE_CREDS),
+    meta: {
+      dataProviderName: constants.PROVIDER_PORTAL,
+    },
+  },
 ];
 
 const sdk = [

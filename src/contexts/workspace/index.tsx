@@ -42,18 +42,16 @@ export const Provider: React.FC<PropsWithChildren> = ({ children }) => {
         const picked = (data as any[]).find((ws: IWorkspace) => ws.id === id);
         if (!picked) return;
 
+        persistence.set(KEY_TENANT_ID, picked.id);
         setSelected(picked);
         return;
       })
       .finally(() => setIsLoading(false));
   }, [id]);
 
-  useEffect(() => {
-    if (selected) persistence.set(KEY_TENANT_ID, selected.id);
-  }, [selected]);
-
   if (isLoading) return <Spin fullscreen />;
   if (!available.length) return <Navigate to="/workspace" />;
+  if (!selected) return <Navigate to="/workspace" />;
 
   const select = (picked: IWorkspace) => {
     setSelected(picked);

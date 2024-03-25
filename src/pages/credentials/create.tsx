@@ -1,12 +1,22 @@
 import React from "react";
-import { IResourceComponentsProps } from "@refinedev/core";
+import { IResourceComponentsProps, useNavigation } from "@refinedev/core";
 import { Create as CoreCreate, useForm } from "@refinedev/antd";
-import { Form, Input, Alert } from "antd";
-import { useLocation } from "react-router-dom";
-import { IApplication } from "@console/interfaces";
+import { useNavigate } from "react-router-dom";
+import { Form, Input } from "antd";
+import * as constants from "@console/constants";
+import { ICredentials } from "@console/interfaces";
 
 export const Create: React.FC<IResourceComponentsProps> = ({}) => {
-  const { formProps, saveButtonProps } = useForm();
+  const { showUrl } = useNavigation();
+  const navigate = useNavigate();
+
+  const { formProps, saveButtonProps } = useForm({
+    redirect: false,
+    onMutationSuccess(data) {
+      const url = showUrl(constants.RESOURCE_CREDS, data.data.username);
+      navigate(url, { state: { credentials: data.data } });
+    },
+  });
 
   return (
     <React.Fragment>
@@ -17,7 +27,7 @@ export const Create: React.FC<IResourceComponentsProps> = ({}) => {
           initialValues={
             {
               name: `Created at ${new Date().toLocaleString()}`,
-            } as Partial<IApplication>
+            } as Partial<ICredentials>
           }
         >
           <Form.Item label={"Name"} name={"name"} rules={[{ required: true }]}>

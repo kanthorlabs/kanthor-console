@@ -5,64 +5,59 @@ import {
   TextField,
   DateField,
   ListButton,
-  EditButton,
-  DeleteButton,
   RefreshButton,
 } from "@refinedev/antd";
-import { Typography, Button, Space } from "antd";
-import { ApiOutlined } from "@ant-design/icons";
-import * as constants from "@console/constants";
+import { Typography, Space } from "antd";
+import { useLocation } from "react-router-dom";
 import * as configs from "@console/configs";
-import { IApplication } from "@console/interfaces";
+import { ICredentials } from "@console/interfaces";
+import { BooleanField } from "@console/components/fields";
 
 const { Title } = Typography;
 
 export const Show: React.FC<IResourceComponentsProps> = () => {
-  const go = useGo();
-
-  const { queryResult } = useShow();
+  const { queryResult } = useShow({});
   const { data, isLoading } = queryResult;
+  const { state } = useLocation();
 
-  const record: IApplication = data?.data as any;
+  const record: ICredentials = data?.data as any;
   if (!record) return null;
+
+  const credentials = state.credentials ? (
+    <div>{JSON.stringify(state.credentials)}</div>
+  ) : null;
 
   return (
     <Space direction="vertical" size="large" style={{ display: "flex" }}>
       <CoreShow
         isLoading={isLoading}
-        headerButtons={({
-          deleteButtonProps,
-          editButtonProps,
-          listButtonProps,
-          refreshButtonProps,
-        }) => (
+        headerButtons={({ listButtonProps, refreshButtonProps }) => (
           <React.Fragment>
             {listButtonProps && <ListButton {...listButtonProps} />}
-            {editButtonProps && (
-              <EditButton {...editButtonProps} type="default" />
-            )}
-            {deleteButtonProps && <DeleteButton {...deleteButtonProps} />}
             <RefreshButton {...refreshButtonProps} />
-            <Button
-              type="primary"
-              onClick={() =>
-                go({
-                  to: { resource: constants.RESOURCE_EP, action: "list" },
-                  query: { app_id: record?.id },
-                })
-              }
-              icon={<ApiOutlined />}
-            >
-              Endpoints
-            </Button>
           </React.Fragment>
         )}
       >
         <Title level={5}>{"Id"}</Title>
-        <TextField value={record.id} />
+        <TextField value={record.username} />
+
+        {credentials}
 
         <Title level={5}>{"Name"}</Title>
         <TextField value={record.name} />
+
+        <Title level={5}>{"Status"}</Title>
+        <BooleanField
+          value={
+            record.deactivated_at === 0 || record.deactivated_at > +new Date()
+          }
+        />
+
+        <Title level={5}>{"Expired At"}</Title>
+        <DateField
+          value={record.deactivated_at}
+          format={configs.format.datetime}
+        />
 
         <Title level={5}>{"Created At"}</Title>
         <DateField value={record.created_at} format={configs.format.datetime} />

@@ -12,6 +12,7 @@ import {
 import { Typography, Button, Space } from "antd";
 import { BranchesOutlined } from "@ant-design/icons";
 import * as constants from "@console/constants";
+import * as configs from "@console/configs";
 import * as hooks from "@console/hooks";
 import { IApplication, IEndpoint } from "@console/interfaces";
 
@@ -80,10 +81,10 @@ export const Show: React.FC<IResourceComponentsProps> = () => {
         <TextField value={ep.uri} />
 
         <Title level={5}>{"Created At"}</Title>
-        <DateField value={ep.created_at} format="YYYY-MM-DD HH:mm:ss ZZ" />
+        <DateField value={ep.created_at} format={configs.format.datetime} />
 
         <Title level={5}>{"Updated At"}</Title>
-        <DateField value={ep.updated_at} format="YYYY-MM-DD HH:mm:ss ZZ" />
+        <DateField value={ep.updated_at} format={configs.format.datetime} />
       </CoreShow>
     </Space>
   );

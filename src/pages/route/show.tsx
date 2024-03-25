@@ -8,6 +8,7 @@ import {
 } from "@refinedev/antd";
 import { Typography } from "antd";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
+import * as configs from "@console/configs";
 import { IRoute } from "@console/interfaces";
 
 const { Title } = Typography;
@@ -44,10 +45,10 @@ export const Show: React.FC<IResourceComponentsProps> = () => {
       <TextField value={record.condition_expression} />
 
       <Title level={5}>{"Created At"}</Title>
-      <DateField value={record.created_at} format="YYYY-MM-DD HH:mm:ss ZZ" />
+      <DateField value={record.created_at} format={configs.format.datetime} />
 
       <Title level={5}>{"Updated At"}</Title>
-      <DateField value={record.updated_at} format="YYYY-MM-DD HH:mm:ss ZZ" />
+      <DateField value={record.updated_at} format={configs.format.datetime} />
     </CoreShow>
   );
 };

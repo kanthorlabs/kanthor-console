@@ -88,6 +88,22 @@ function App() {
                   <Route index element={<pages.dashboard.Dashboard />} />
                   <Route path="/account" element={<pages.account.Account />} />
 
+                  <Route path="/credentials">
+                    <Route index element={<pages.credentials.List />} />
+                    <Route
+                      path="create"
+                      element={<pages.credentials.Create />}
+                    />
+                    <Route
+                      path="edit/:id"
+                      element={<pages.credentials.Edit />}
+                    />
+                    <Route
+                      path="show/:id"
+                      element={<pages.credentials.Show />}
+                    />
+                  </Route>
+
                   <Route path="/application">
                     <Route index element={<pages.application.List />} />
                     <Route

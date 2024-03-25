@@ -2,20 +2,17 @@ import React from "react";
 import { IResourceComponentsProps, useParsed } from "@refinedev/core";
 import { Create as CoreCreate, useForm, useSelect } from "@refinedev/antd";
 import { Form, Input, InputNumber, Select, Checkbox } from "antd";
-import { ConditionSource, IEndpoint } from "../../interfaces";
+import { ConditionSource, IEndpoint } from "@console/interfaces";
+import * as constants from "@console/constants";
 
 export const Create: React.FC<IResourceComponentsProps> = ({}) => {
   const { formProps, saveButtonProps } = useForm();
   const { params } = useParsed<{ ep_id?: string }>();
 
   const { selectProps } = useSelect({
-    resource: "endpoint",
+    resource: constants.RESOURCE_EP,
     defaultValue: params?.ep_id,
-    pagination: {
-      mode: "server",
-      current: 0,
-      pageSize: 10,
-    },
+    pagination: { mode: "server", current: 0, pageSize: 10 },
     optionLabel: "name",
     optionValue: "id",
     onSearch: (value) => [

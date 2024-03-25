@@ -12,11 +12,7 @@ export const Create: React.FC<IResourceComponentsProps> = ({}) => {
   const { selectProps } = useSelect({
     resource: constants.RESOURCE_APP,
     defaultValue: params?.app_id,
-    pagination: {
-      mode: "server",
-      current: 0,
-      pageSize: 10,
-    },
+    pagination: { mode: "server", current: 0, pageSize: 10 },
     optionLabel: "name",
     optionValue: "id",
     onSearch: (value) => [

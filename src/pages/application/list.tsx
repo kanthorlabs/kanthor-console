@@ -9,6 +9,7 @@ import {
   ShowButton,
 } from "@refinedev/antd";
 import { Table, Space } from "antd";
+import * as configs from "@console/configs";
 
 export const List: React.FC<IResourceComponentsProps> = () => {
   const { tableProps } = useTable({ syncWithLocation: true });
@@ -22,14 +23,14 @@ export const List: React.FC<IResourceComponentsProps> = () => {
           dataIndex={["created_at"]}
           title={"Created At"}
           render={(value: any) => {
-            return <DateField value={value} format="YYYY-MM-DD HH:mm:ss ZZ" />;
+            return <DateField value={value} format={configs.format.datetime} />;
           }}
         />
         <Table.Column
           dataIndex={["updated_at"]}
           title={"Updated At"}
           render={(value: any) => {
-            return <DateField value={value} format="YYYY-MM-DD HH:mm:ss ZZ" />;
+            return <DateField value={value} format={configs.format.datetime} />;
           }}
         />
         <Table.Column

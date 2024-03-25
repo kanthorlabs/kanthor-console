@@ -17,6 +17,7 @@ import {
 import { Table, Space, Form, FormProps, Select } from "antd";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import * as constants from "@console/constants";
+import * as configs from "@console/configs";
 import * as hooks from "@console/hooks";
 import { IEndpoint, IRoute } from "@console/interfaces";
 
@@ -77,14 +78,14 @@ export const List: React.FC<IResourceComponentsProps> = () => {
           dataIndex={["created_at"]}
           title={"Created At"}
           render={(value: any) => {
-            return <DateField value={value} format="YYYY-MM-DD HH:mm:ss ZZ" />;
+            return <DateField value={value} format={configs.format.datetime} />;
           }}
         />
         <Table.Column
           dataIndex={["updated_at"]}
           title={"Updated At"}
           render={(value: any) => {
-            return <DateField value={value} format="YYYY-MM-DD HH:mm:ss ZZ" />;
+            return <DateField value={value} format={configs.format.datetime} />;
           }}
         />
         <Table.Column

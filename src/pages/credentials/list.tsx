@@ -5,24 +5,39 @@ import {
   List as CoreList,
   DateField,
   EditButton,
-  ShowButton,
 } from "@refinedev/antd";
 import { Table, Space } from "antd";
 import * as configs from "@console/configs";
+import { BooleanField } from "@console/components/fields";
+import { ExpireButton } from "./expire";
 
 export const List: React.FC<IResourceComponentsProps> = () => {
-  const { tableProps } = useTable({
-    syncWithLocation: true,
-    pagination: { mode: "client" },
-  });
+  const { tableProps } = useTable({ syncWithLocation: true });
 
   return (
     <CoreList>
-      <Table {...tableProps} rowKey="id">
-        <Table.Column dataIndex="id" title={"ID"} />
+      <Table {...tableProps} rowKey="username">
+        <Table.Column dataIndex="username" title={"ID"} />
         <Table.Column dataIndex="name" title={"Name"} />
-        <Table.Column dataIndex="owner_id" title={"Owner"} />
-        <Table.Column dataIndex="tier" title={"Tier"} />
+        <Table.Column
+          dataIndex="deactivated_at"
+          title={"Status"}
+          align="center"
+          render={(value: number) => (
+            <BooleanField value={value === 0 || value > +new Date()} />
+          )}
+        />
+        <Table.Column
+          dataIndex={["deactivated_at"]}
+          title={"Expired At"}
+          render={(value: any) =>
+            value === 0 ? (
+              <span>-</span>
+            ) : (
+              <DateField value={value} format={configs.format.datetime} />
+            )
+          }
+        />
         <Table.Column
           dataIndex={["created_at"]}
           title={"Created At"}
@@ -31,8 +46,8 @@ export const List: React.FC<IResourceComponentsProps> = () => {
           }}
         />
         <Table.Column
-          dataIndex={["updated_at"]}
-          title={"Updated At"}
+          dataIndex={["created_at"]}
+          title={"Created At"}
           render={(value: any) => {
             return <DateField value={value} format={configs.format.datetime} />;
           }}
@@ -40,15 +55,17 @@ export const List: React.FC<IResourceComponentsProps> = () => {
         <Table.Column
           title={"Actions"}
           dataIndex="actions"
-          align="center"
           render={(_, record: BaseRecord) => (
             <Space>
-              <EditButton hideText size="small" recordItemId={record.id} />
-              <ShowButton
+              <EditButton
                 hideText
                 size="small"
-                type="primary"
-                recordItemId={record.id}
+                recordItemId={record.username}
+              />
+              <ExpireButton
+                hideText
+                size="small"
+                recordItemId={record.username}
               />
             </Space>
           )}
