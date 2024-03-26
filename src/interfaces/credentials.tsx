@@ -4,4 +4,7 @@ export interface ICredentials {
   created_at: number;
   updated_at: number;
   deactivated_at: number;
+  schemes: {
+    basic: string;
+  };
 }
