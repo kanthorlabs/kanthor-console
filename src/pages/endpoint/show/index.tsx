@@ -9,12 +9,13 @@ import {
   DeleteButton,
   RefreshButton,
 } from "@refinedev/antd";
-import { Typography, Button, Space } from "antd";
-import { BranchesOutlined } from "@ant-design/icons";
+import { Typography, Button, Space, Tooltip } from "antd";
+import { BranchesOutlined, EyeOutlined } from "@ant-design/icons";
 import * as constants from "@console/constants";
 import * as configs from "@console/configs";
 import * as hooks from "@console/hooks";
 import { IApplication, IEndpoint } from "@console/interfaces";
+import { useSecret } from "./secret";
 
 const { Title } = Typography;
 
@@ -27,6 +28,7 @@ export const Show: React.FC<IResourceComponentsProps> = () => {
     constants.RESOURCE_APP,
     ep?.app_id
   );
+  const { toggle, secret, error } = useSecret();
 
   if (!ep) return null;
 
@@ -79,6 +81,19 @@ export const Show: React.FC<IResourceComponentsProps> = () => {
 
         <Title level={5}>{"Uri"}</Title>
         <TextField value={ep.uri} />
+
+        <Title style={{ color: "#f5222d" }} level={5}>
+          {"Secret"}
+        </Title>
+        <TextField value={!!secret ? secret : "*********"} />
+        <Tooltip title="Obtain the secret">
+          <Button
+            shape="circle"
+            icon={<EyeOutlined />}
+            size="small"
+            onClick={() => toggle(ep.id)}
+          />
+        </Tooltip>
 
         <Title level={5}>{"Created At"}</Title>
         <DateField value={ep.created_at} format={configs.format.datetime} />
