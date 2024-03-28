@@ -6,7 +6,7 @@ import { Form, Input } from "antd";
 import * as constants from "@console/constants";
 import { ICredentials } from "@console/interfaces";
 
-export const Create: React.FC<IResourceComponentsProps> = ({}) => {
+const Create: React.FC<IResourceComponentsProps> = ({}) => {
   const { showUrl } = useNavigation();
   const navigate = useNavigate();
 
@@ -38,3 +38,5 @@ export const Create: React.FC<IResourceComponentsProps> = ({}) => {
     </React.Fragment>
   );
 };
+
+export default Create;

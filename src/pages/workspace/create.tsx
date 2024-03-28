@@ -4,7 +4,7 @@ import { Create as CoreCreate, useForm } from "@refinedev/antd";
 import { Form, Input } from "antd";
 import { IWorkspace } from "@console/interfaces";
 
-export const Create: React.FC<IResourceComponentsProps> = ({}) => {
+const Create: React.FC<IResourceComponentsProps> = ({}) => {
   const { params } = useParsed<{ name?: string }>();
   const { formProps, saveButtonProps } = useForm();
 
@@ -30,3 +30,5 @@ export const Create: React.FC<IResourceComponentsProps> = ({}) => {
     </CoreCreate>
   );
 };
+
+export default Create;

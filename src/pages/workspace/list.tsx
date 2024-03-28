@@ -10,7 +10,7 @@ import { Table, Space } from "antd";
 import * as configs from "@console/configs";
 import * as fields from "@console/components/fields";
 
-export const List: React.FC<IResourceComponentsProps> = () => {
+const List: React.FC<IResourceComponentsProps> = () => {
   const { tableProps } = useTable({
     syncWithLocation: true,
     pagination: { mode: "client" },
@@ -67,3 +67,5 @@ export const List: React.FC<IResourceComponentsProps> = () => {
     </CoreList>
   );
 };
+
+export default List;

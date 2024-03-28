@@ -6,7 +6,7 @@ import { ConditionSource, IEndpoint, IRoute } from "@console/interfaces";
 import * as constants from "@console/constants";
 import * as hooks from "@console/hooks";
 
-export const Edit: React.FC<IResourceComponentsProps> = () => {
+const Edit: React.FC<IResourceComponentsProps> = () => {
   const { formProps, saveButtonProps, queryResult } = useForm();
   const rt: IRoute | undefined = queryResult?.data?.data as any;
   const { isLoading, doc } = hooks.useParent<IEndpoint>(
@@ -67,3 +67,5 @@ export const Edit: React.FC<IResourceComponentsProps> = () => {
     </CoreEdit>
   );
 };
+
+export default Edit;

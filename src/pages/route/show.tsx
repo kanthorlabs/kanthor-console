@@ -9,7 +9,7 @@ import * as fields from "@console/components/fields";
 import * as hooks from "@console/hooks";
 import { Props } from "@console/components/props";
 
-export const Show: React.FC<IResourceComponentsProps> = () => {
+const Show: React.FC<IResourceComponentsProps> = () => {
   const { queryResult } = useShow();
 
   const record: IRoute = queryResult.data?.data as any;
@@ -87,3 +87,5 @@ export const Show: React.FC<IResourceComponentsProps> = () => {
     </CoreShow>
   );
 };
+
+export default Show;

@@ -10,7 +10,7 @@ import * as fields from "@console/components/fields";
 import { Examples } from "./examples";
 import { Token } from "./token";
 
-export const Show: React.FC<IResourceComponentsProps> = () => {
+const Show: React.FC<IResourceComponentsProps> = () => {
   const { queryResult } = useShow({});
   const { data, isLoading } = queryResult;
   const { state } = useLocation();
@@ -64,3 +64,5 @@ export const Show: React.FC<IResourceComponentsProps> = () => {
     </Space>
   );
 };
+
+export default Show;

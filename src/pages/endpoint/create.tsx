@@ -5,7 +5,7 @@ import { Form, Input, Select } from "antd";
 import * as constants from "@console/constants";
 import { HttpMethod, IEndpoint } from "@console/interfaces";
 
-export const Create: React.FC<IResourceComponentsProps> = ({}) => {
+const Create: React.FC<IResourceComponentsProps> = ({}) => {
   const { formProps, saveButtonProps } = useForm();
 
   const { params } = useParsed<{ app_id?: string }>();
@@ -78,3 +78,5 @@ export const Create: React.FC<IResourceComponentsProps> = ({}) => {
     </CoreCreate>
   );
 };
+
+export default Create;

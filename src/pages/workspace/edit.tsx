@@ -3,7 +3,7 @@ import { IResourceComponentsProps } from "@refinedev/core";
 import { Edit as CoreEdit, useForm } from "@refinedev/antd";
 import { Form, Input } from "antd";
 
-export const Edit: React.FC<IResourceComponentsProps> = () => {
+const Edit: React.FC<IResourceComponentsProps> = () => {
   const { formProps, saveButtonProps } = useForm();
 
   return (
@@ -20,3 +20,5 @@ export const Edit: React.FC<IResourceComponentsProps> = () => {
     </CoreEdit>
   );
 };
+
+export default Edit;

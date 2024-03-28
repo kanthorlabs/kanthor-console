@@ -5,7 +5,7 @@ import { Form, Input, InputNumber, Select, Checkbox } from "antd";
 import { ConditionSource, IEndpoint } from "@console/interfaces";
 import * as constants from "@console/constants";
 
-export const Create: React.FC<IResourceComponentsProps> = ({}) => {
+const Create: React.FC<IResourceComponentsProps> = ({}) => {
   const { formProps, saveButtonProps } = useForm();
   const { params } = useParsed<{ ep_id?: string }>();
 
@@ -127,3 +127,5 @@ export const Create: React.FC<IResourceComponentsProps> = ({}) => {
     </CoreCreate>
   );
 };
+
+export default Create;

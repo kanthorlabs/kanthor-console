@@ -21,7 +21,7 @@ import { IEndpoint, IRoute } from "@console/interfaces";
 import * as fields from "@console/components/fields";
 import * as hooks from "@console/hooks";
 
-export const List: React.FC<IResourceComponentsProps> = () => {
+const List: React.FC<IResourceComponentsProps> = () => {
   const { params } = useParsed<{ ep_id?: string }>();
   const { tableProps, tableQueryResult, searchFormProps } = useTable({
     syncWithLocation: true,
@@ -163,3 +163,5 @@ const Filter: React.FC<{ formProps: FormProps }> = ({ formProps }) => {
     </Form>
   );
 };
+
+export default List;

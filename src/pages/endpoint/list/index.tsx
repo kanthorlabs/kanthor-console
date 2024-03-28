@@ -7,16 +7,16 @@ import {
   DeleteButton,
   ShowButton,
   TextField,
-  useSelect,
 } from "@refinedev/antd";
-import { Table, Space, Form, Select, FormProps } from "antd";
+import { Table, Space } from "antd";
 import * as constants from "@console/constants";
 import * as configs from "@console/configs";
 import * as hooks from "@console/hooks";
 import { IApplication, IEndpoint } from "@console/interfaces";
 import * as fields from "@console/components/fields";
+import { Filter } from "./filter";
 
-export const List: React.FC<IResourceComponentsProps> = () => {
+const List: React.FC<IResourceComponentsProps> = () => {
   const { params } = useParsed<{ app_id?: string }>();
   const { tableProps, tableQueryResult, searchFormProps } = useTable({
     syncWithLocation: true,
@@ -92,51 +92,4 @@ export const List: React.FC<IResourceComponentsProps> = () => {
   );
 };
 
-const Filter: React.FC<{ formProps: FormProps }> = ({ formProps }) => {
-  const { params } = useParsed<{ app_id?: string }>();
-
-  const { selectProps } = useSelect({
-    resource: constants.RESOURCE_APP,
-    defaultValue: params?.app_id,
-    pagination: {
-      mode: "server",
-      current: 0,
-      pageSize: 10,
-    },
-    optionLabel: "name",
-    optionValue: "id",
-    onSearch: (value) => [
-      {
-        field: "_q",
-        operator: "eq",
-        value,
-      },
-    ],
-  });
-  const selected = selectProps.options?.find((o) => o.value === params?.app_id);
-
-  return (
-    <Form layout="vertical" {...formProps}>
-      <Form.Item name="app_id">
-        {selected ? (
-          <Select
-            key="with-default"
-            allowClear
-            {...selectProps}
-            defaultValue={selected as any}
-            onChange={formProps.form?.submit}
-            placeholder="Type to search then select application to filter"
-          />
-        ) : (
-          <Select
-            key="no-default"
-            allowClear
-            {...selectProps}
-            onChange={formProps.form?.submit}
-            placeholder="Type to search then select application to filter"
-          />
-        )}
-      </Form.Item>
-    </Form>
-  );
-};
+export default List;

@@ -6,7 +6,7 @@ import { Typography, theme } from "antd";
 import * as configs from "@console/configs";
 import { External } from "@console/providers/auth/external";
 
-export const Register = () => {
+const Register = () => {
   const Link = useLink();
   const { token } = theme.useToken();
 
@@ -42,3 +42,5 @@ export const Register = () => {
     />
   );
 };
+
+export default Register;

@@ -6,7 +6,7 @@ import * as constants from "@console/constants";
 import * as hooks from "@console/hooks";
 import { HttpMethod, IApplication, IEndpoint } from "@console/interfaces";
 
-export const Edit: React.FC<IResourceComponentsProps> = () => {
+const Edit: React.FC<IResourceComponentsProps> = () => {
   const { formProps, saveButtonProps, queryResult } = useForm();
   const ep: IEndpoint | undefined = queryResult?.data?.data as any;
   const { isLoading, doc } = hooks.useParent<IApplication>(
@@ -48,3 +48,5 @@ export const Edit: React.FC<IResourceComponentsProps> = () => {
     </CoreEdit>
   );
 };
+
+export default Edit;

@@ -8,7 +8,7 @@ import {
   DeleteButton,
   RefreshButton,
 } from "@refinedev/antd";
-import { Typography, Button, Space } from "antd";
+import { Button, Space } from "antd";
 import { BranchesOutlined } from "@ant-design/icons";
 import * as constants from "@console/constants";
 import * as configs from "@console/configs";
@@ -19,9 +19,7 @@ import { Props } from "@console/components/props";
 
 import { ViewSecretButton } from "./secret";
 
-const { Title } = Typography;
-
-export const Show: React.FC<IResourceComponentsProps> = () => {
+const Show: React.FC<IResourceComponentsProps> = () => {
   const go = useGo();
   const { queryResult } = useShow();
   const record: IEndpoint | undefined = queryResult?.data?.data as any;
@@ -115,3 +113,5 @@ export const Show: React.FC<IResourceComponentsProps> = () => {
     </Space>
   );
 };
+
+export default Show;

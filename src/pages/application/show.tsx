@@ -15,7 +15,7 @@ import { IApplication } from "@console/interfaces";
 import * as fields from "@console/components/fields";
 import { Props } from "@console/components/props";
 
-export const Show: React.FC<IResourceComponentsProps> = () => {
+const Show: React.FC<IResourceComponentsProps> = () => {
   const go = useGo();
 
   const { queryResult } = useShow();
@@ -90,3 +90,5 @@ export const Show: React.FC<IResourceComponentsProps> = () => {
     </Space>
   );
 };
+
+export default Show;

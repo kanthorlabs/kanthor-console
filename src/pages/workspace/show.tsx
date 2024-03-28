@@ -6,10 +6,12 @@ import {
   useNavigation,
 } from "@refinedev/core";
 
-export const Show: React.FC<IResourceComponentsProps> = () => {
+const Show: React.FC<IResourceComponentsProps> = () => {
   const { listUrl } = useNavigation();
   const { showId } = useShow();
 
   const to = `${listUrl("analytics")}?ws_id=${showId}`;
   return <Navigate to={to} />;
 };
+
+export default Show;
