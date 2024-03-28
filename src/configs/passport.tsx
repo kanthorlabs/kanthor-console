@@ -1,7 +1,7 @@
 import { IMap } from "@console/interfaces";
 
 export const passport: IPassport = {
-  strategy: import.meta.env.VITE_KANTHOR_PASSPORT_STRATEGY || "",
+  engine: import.meta.env.VITE_KANTHOR_PASSPORT_ENGINE || "",
   username: import.meta.env.VITE_KANTHOR_PASSPORT_USERNAME || "",
   password: import.meta.env.VITE_KANTHOR_PASSPORT_PASSWORD || "",
   remember:
@@ -9,13 +9,14 @@ export const passport: IPassport = {
     7 * 24 * 60 * 60,
   strategies: {
     ask: {
-      name: import.meta.env.VITE_KANTHOR_PASSPORT_STRATEGIES_ASK_NAME || "",
+      strategy:
+        import.meta.env.VITE_KANTHOR_PASSPORT_STRATEGIES_ASK_STRATEGY || "",
     },
   },
 };
 
 export interface IPassport {
-  strategy: string;
+  engine: string;
   username: string;
   password: string;
   remember: number;
@@ -23,5 +24,5 @@ export interface IPassport {
 }
 
 export interface IStrategy {
-  name: string;
+  strategy: string;
 }

@@ -18,7 +18,7 @@ import {
 } from "./constants";
 
 export class Ask implements Required<AuthBindings> {
-  public static name: string = "ask";
+  public static engine: string = "ask";
 
   public async login({
     email,

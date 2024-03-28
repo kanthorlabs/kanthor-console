@@ -13,7 +13,10 @@ httpc.interceptors.request.use(
   (config) => {
     config.headers.set("Idempotency-Key", uuid());
 
-    config.headers.set("X-Authorization-Stategy", configs.passport.strategy);
+    config.headers.set(
+      "X-Authorization-Stategy",
+      configs.passport.strategies[configs.passport.engine].strategy
+    );
 
     const { data: tenantId } = persistence.get<string>(KEY_TENANT_ID);
     if (tenantId) {

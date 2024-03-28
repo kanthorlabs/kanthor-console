@@ -12,7 +12,7 @@ export const Login = () => {
   const props: AuthProps = { registerLink: false, forgotPasswordLink: false };
 
   // hardcode
-  const isexternal = configs.passport.strategy === External.name;
+  const isexternal = configs.passport.engine === External.engine;
   if (isexternal) {
     props.registerLink = (
       <div style={{ marginTop: 8 }}>

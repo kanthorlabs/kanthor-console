@@ -1,13 +1,12 @@
 import { AuthBindings } from "@refinedev/core";
 import { IMap } from "@console/interfaces";
-import * as configs from "@console/configs";
 import { Ask } from "./ask";
 
 const strategies: IMap<AuthBindings> = {};
 
-export function get(name: string): AuthBindings {
-  if (!strategies[name]) {
-    if (name === Ask.name) strategies[name] = new Ask();
+export function get(engine: string): AuthBindings {
+  if (!strategies[engine]) {
+    if (engine === Ask.engine) strategies[engine] = new Ask();
   }
-  return strategies[name];
+  return strategies[engine];
 }

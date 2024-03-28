@@ -1,3 +1,3 @@
 export class External {
-  public static name: string = "external";
+  public static engine: string = "external";
 }

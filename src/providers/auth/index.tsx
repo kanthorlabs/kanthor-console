@@ -1,23 +1,22 @@
 import { AuthBindings } from "@refinedev/core";
 import * as configs from "@console/configs";
 import * as factory from "./factory";
-import { Ask } from "./ask";
 
 export const auth: AuthBindings = {
   login: async (params: any) => {
-    return factory.get(Ask.name).login(params);
+    return factory.get(configs.passport.engine).login(params);
   },
   logout: async (params: any) => {
-    return factory.get(Ask.name).logout(params);
+    return factory.get(configs.passport.engine).logout(params);
   },
   check: async (params: any) => {
-    return factory.get(Ask.name).check(params);
+    return factory.get(configs.passport.engine).check(params);
   },
   onError: async (error) => {
-    return factory.get(Ask.name).onError(error);
+    return factory.get(configs.passport.engine).onError(error);
   },
   getIdentity: async (params?: any) => {
-    const fn = factory.get(Ask.name).getIdentity;
+    const fn = factory.get(configs.passport.engine).getIdentity;
     if (!fn) return null;
 
     return fn(params);

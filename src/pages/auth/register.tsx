@@ -13,7 +13,7 @@ export const Register = () => {
   const go = useGo();
   // hardcode
   React.useEffect(() => {
-    const isexternal = configs.passport.strategy === External.name;
+    const isexternal = configs.passport.engine === External.engine;
     if (!isexternal) go({ to: "/auth/login" });
   }, []);
 
