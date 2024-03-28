@@ -8,8 +8,8 @@ import {
   DeleteButton,
   RefreshButton,
 } from "@refinedev/antd";
-import { Typography, Button, Space, Tooltip } from "antd";
-import { BranchesOutlined, EyeOutlined } from "@ant-design/icons";
+import { Typography, Button, Space } from "antd";
+import { BranchesOutlined } from "@ant-design/icons";
 import * as constants from "@console/constants";
 import * as configs from "@console/configs";
 import { IApplication, IEndpoint } from "@console/interfaces";
@@ -17,7 +17,7 @@ import * as fields from "@console/components/fields";
 import * as hooks from "@console/hooks";
 import { Props } from "@console/components/props";
 
-import { useSecret } from "./secret";
+import { ViewSecretButton } from "./secret";
 
 const { Title } = Typography;
 
@@ -30,8 +30,6 @@ export const Show: React.FC<IResourceComponentsProps> = () => {
     constants.RESOURCE_APP,
     record?.app_id
   );
-  const { toggle, secret, error } = useSecret();
-
   if (!record) return null;
 
   return (
@@ -45,6 +43,7 @@ export const Show: React.FC<IResourceComponentsProps> = () => {
           refreshButtonProps,
         }) => (
           <React.Fragment>
+            <ViewSecretButton endpoint={record} />
             {listButtonProps && <ListButton {...listButtonProps} />}
             {editButtonProps && (
               <EditButton {...editButtonProps} type="default" />
@@ -112,19 +111,6 @@ export const Show: React.FC<IResourceComponentsProps> = () => {
             },
           ]}
         />
-
-        <Title style={{ color: "#f5222d" }} level={5}>
-          {"Secret"}
-        </Title>
-        <TextField value={!!secret ? secret : "*********"} />
-        <Tooltip title="Obtain the secret">
-          <Button
-            shape="circle"
-            icon={<EyeOutlined />}
-            size="small"
-            onClick={() => toggle(record.id)}
-          />
-        </Tooltip>
       </CoreShow>
     </Space>
   );
