@@ -7,7 +7,6 @@ import {
 import {
   useTable,
   List as CoreList,
-  DateField,
   EditButton,
   DeleteButton,
   ShowButton,
@@ -18,8 +17,9 @@ import { Table, Space, Form, FormProps, Select } from "antd";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import * as constants from "@console/constants";
 import * as configs from "@console/configs";
-import * as hooks from "@console/hooks";
 import { IEndpoint, IRoute } from "@console/interfaces";
+import * as fields from "@console/components/fields";
+import * as hooks from "@console/hooks";
 
 export const List: React.FC<IResourceComponentsProps> = () => {
   const { params } = useParsed<{ ep_id?: string }>();
@@ -78,14 +78,24 @@ export const List: React.FC<IResourceComponentsProps> = () => {
           dataIndex={["created_at"]}
           title={"Created At"}
           render={(value: any) => {
-            return <DateField value={value} format={configs.format.datetime} />;
+            return (
+              <fields.Timestamp
+                value={value}
+                format={configs.format.datetime}
+              />
+            );
           }}
         />
         <Table.Column
           dataIndex={["updated_at"]}
           title={"Updated At"}
           render={(value: any) => {
-            return <DateField value={value} format={configs.format.datetime} />;
+            return (
+              <fields.Timestamp
+                value={value}
+                format={configs.format.datetime}
+              />
+            );
           }}
         />
         <Table.Column

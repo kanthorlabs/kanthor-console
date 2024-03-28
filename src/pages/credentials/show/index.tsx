@@ -1,21 +1,14 @@
 import React from "react";
-import { IResourceComponentsProps, useShow, useGo } from "@refinedev/core";
-import {
-  Show as CoreShow,
-  TextField,
-  DateField,
-  ListButton,
-  RefreshButton,
-} from "@refinedev/antd";
-import { Typography, Space, Tabs, Button } from "antd";
+import { IResourceComponentsProps, useShow } from "@refinedev/core";
+import { Show as CoreShow, ListButton } from "@refinedev/antd";
+import { Space } from "antd";
 import { useLocation } from "react-router-dom";
 import * as configs from "@console/configs";
 import { ICredentials } from "@console/interfaces";
-import { BooleanField } from "@console/components/fields";
-import { Code } from "@console/components/code";
-import * as cURL from "./curl";
-import * as go from "./go";
-const { Title } = Typography;
+import { Props } from "@console/components/props";
+import * as fields from "@console/components/fields";
+import { Examples } from "./examples";
+import { Token } from "./token";
 
 export const Show: React.FC<IResourceComponentsProps> = () => {
   const { queryResult } = useShow({});
@@ -35,13 +28,39 @@ export const Show: React.FC<IResourceComponentsProps> = () => {
           </React.Fragment>
         )}
       >
-        {!!state?.credentials && (
-          <Tabs
-            defaultActiveKey={cURL.Key}
-            items={[cURL.Tab(state.credentials), go.Tab(state.credentials)]}
-          />
-        )}
+        <Props
+          items={[
+            {
+              name: "Name",
+              value: record.name,
+            },
+            {
+              name: "Status",
+              value: (
+                <fields.Boolean
+                  value={
+                    record.deactivated_at === 0 ||
+                    record.deactivated_at > +new Date()
+                  }
+                />
+              ),
+            },
+            {
+              name: "Expired At",
+              value: (
+                <fields.Timestamp
+                  none="Never"
+                  value={record.deactivated_at}
+                  format={configs.format.datetime}
+                />
+              ),
+            },
+          ]}
+        />
       </CoreShow>
+
+      <Token credentials={state?.credentials} />
+      <Examples credentials={state?.credentials} />
     </Space>
   );
 };

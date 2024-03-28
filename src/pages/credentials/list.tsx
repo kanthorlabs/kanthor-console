@@ -3,12 +3,12 @@ import { IResourceComponentsProps, BaseRecord } from "@refinedev/core";
 import {
   useTable,
   List as CoreList,
-  DateField,
   EditButton,
+  ShowButton,
 } from "@refinedev/antd";
 import { Table, Space } from "antd";
 import * as configs from "@console/configs";
-import { BooleanField } from "@console/components/fields";
+import * as fields from "@console/components/fields";
 import { ExpireButton } from "./expire";
 
 export const List: React.FC<IResourceComponentsProps> = () => {
@@ -24,7 +24,7 @@ export const List: React.FC<IResourceComponentsProps> = () => {
           title={"Status"}
           align="center"
           render={(value: number) => (
-            <BooleanField value={value === 0 || value > +new Date()} />
+            <fields.Boolean value={value === 0 || value > +new Date()} />
           )}
         />
         <Table.Column
@@ -34,7 +34,10 @@ export const List: React.FC<IResourceComponentsProps> = () => {
             value === 0 ? (
               <span>-</span>
             ) : (
-              <DateField value={value} format={configs.format.datetime} />
+              <fields.Timestamp
+                value={value}
+                format={configs.format.datetime}
+              />
             )
           }
         />
@@ -42,14 +45,24 @@ export const List: React.FC<IResourceComponentsProps> = () => {
           dataIndex={["created_at"]}
           title={"Created At"}
           render={(value: any) => {
-            return <DateField value={value} format={configs.format.datetime} />;
+            return (
+              <fields.Timestamp
+                value={value}
+                format={configs.format.datetime}
+              />
+            );
           }}
         />
         <Table.Column
           dataIndex={["created_at"]}
           title={"Created At"}
           render={(value: any) => {
-            return <DateField value={value} format={configs.format.datetime} />;
+            return (
+              <fields.Timestamp
+                value={value}
+                format={configs.format.datetime}
+              />
+            );
           }}
         />
         <Table.Column
@@ -58,6 +71,11 @@ export const List: React.FC<IResourceComponentsProps> = () => {
           render={(_, record: BaseRecord) => (
             <Space>
               <EditButton
+                hideText
+                size="small"
+                recordItemId={record.username}
+              />
+              <ShowButton
                 hideText
                 size="small"
                 recordItemId={record.username}

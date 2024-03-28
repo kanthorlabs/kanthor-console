@@ -2,20 +2,18 @@ import React from "react";
 import { IResourceComponentsProps, useShow, useGo } from "@refinedev/core";
 import {
   Show as CoreShow,
-  TextField,
-  DateField,
   ListButton,
   EditButton,
   DeleteButton,
   RefreshButton,
 } from "@refinedev/antd";
-import { Typography, Button, Space } from "antd";
+import { Button, Space } from "antd";
 import { ApiOutlined } from "@ant-design/icons";
 import * as constants from "@console/constants";
 import * as configs from "@console/configs";
 import { IApplication } from "@console/interfaces";
-
-const { Title } = Typography;
+import * as fields from "@console/components/fields";
+import { Props } from "@console/components/props";
 
 export const Show: React.FC<IResourceComponentsProps> = () => {
   const go = useGo();
@@ -58,17 +56,36 @@ export const Show: React.FC<IResourceComponentsProps> = () => {
           </React.Fragment>
         )}
       >
-        <Title level={5}>{"Id"}</Title>
-        <TextField value={record.id} />
-
-        <Title level={5}>{"Name"}</Title>
-        <TextField value={record.name} />
-
-        <Title level={5}>{"Created At"}</Title>
-        <DateField value={record.created_at} format={configs.format.datetime} />
-
-        <Title level={5}>{"Updated At"}</Title>
-        <DateField value={record.updated_at} format={configs.format.datetime} />
+        <Props
+          items={[
+            {
+              name: "ID",
+              value: record.id,
+            },
+            {
+              name: "Name",
+              value: record.name,
+            },
+            {
+              name: "Created At",
+              value: (
+                <fields.Timestamp
+                  value={record.created_at}
+                  format={configs.format.datetime}
+                />
+              ),
+            },
+            {
+              name: "Updated At",
+              value: (
+                <fields.Timestamp
+                  value={record.updated_at}
+                  format={configs.format.datetime}
+                />
+              ),
+            },
+          ]}
+        />
       </CoreShow>
     </Space>
   );

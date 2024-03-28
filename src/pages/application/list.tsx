@@ -3,13 +3,13 @@ import { IResourceComponentsProps, BaseRecord } from "@refinedev/core";
 import {
   useTable,
   List as CoreList,
-  DateField,
   EditButton,
   DeleteButton,
   ShowButton,
 } from "@refinedev/antd";
 import { Table, Space } from "antd";
 import * as configs from "@console/configs";
+import * as fields from "@console/components/fields";
 
 export const List: React.FC<IResourceComponentsProps> = () => {
   const { tableProps } = useTable({ syncWithLocation: true });
@@ -23,14 +23,24 @@ export const List: React.FC<IResourceComponentsProps> = () => {
           dataIndex={["created_at"]}
           title={"Created At"}
           render={(value: any) => {
-            return <DateField value={value} format={configs.format.datetime} />;
+            return (
+              <fields.Timestamp
+                value={value}
+                format={configs.format.datetime}
+              />
+            );
           }}
         />
         <Table.Column
           dataIndex={["updated_at"]}
           title={"Updated At"}
           render={(value: any) => {
-            return <DateField value={value} format={configs.format.datetime} />;
+            return (
+              <fields.Timestamp
+                value={value}
+                format={configs.format.datetime}
+              />
+            );
           }}
         />
         <Table.Column

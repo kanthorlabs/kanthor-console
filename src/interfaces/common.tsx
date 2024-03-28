@@ -7,3 +7,8 @@ export interface IAuditable {
   created_at: number;
   updated_at: number;
 }
+
+export interface IItem {
+  name: string;
+  value: any;
+}

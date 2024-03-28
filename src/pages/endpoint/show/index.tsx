@@ -3,7 +3,6 @@ import { IResourceComponentsProps, useShow, useGo } from "@refinedev/core";
 import {
   Show as CoreShow,
   TextField,
-  DateField,
   ListButton,
   EditButton,
   DeleteButton,
@@ -13,8 +12,11 @@ import { Typography, Button, Space, Tooltip } from "antd";
 import { BranchesOutlined, EyeOutlined } from "@ant-design/icons";
 import * as constants from "@console/constants";
 import * as configs from "@console/configs";
-import * as hooks from "@console/hooks";
 import { IApplication, IEndpoint } from "@console/interfaces";
+import * as fields from "@console/components/fields";
+import * as hooks from "@console/hooks";
+import { Props } from "@console/components/props";
+
 import { useSecret } from "./secret";
 
 const { Title } = Typography;
@@ -22,15 +24,15 @@ const { Title } = Typography;
 export const Show: React.FC<IResourceComponentsProps> = () => {
   const go = useGo();
   const { queryResult } = useShow();
-  const ep: IEndpoint | undefined = queryResult?.data?.data as any;
+  const record: IEndpoint | undefined = queryResult?.data?.data as any;
   const { isLoading, doc } = hooks.useParent<IApplication>(
     constants.PROVIDER_SDK,
     constants.RESOURCE_APP,
-    ep?.app_id
+    record?.app_id
   );
   const { toggle, secret, error } = useSecret();
 
-  if (!ep) return null;
+  if (!record) return null;
 
   return (
     <Space direction="vertical" size="large" style={{ display: "flex" }}>
@@ -54,7 +56,7 @@ export const Show: React.FC<IResourceComponentsProps> = () => {
               onClick={() =>
                 go({
                   to: { resource: constants.RESOURCE_RT, action: "list" },
-                  query: { ep_id: ep.id },
+                  query: { ep_id: record.id },
                 })
               }
               icon={<BranchesOutlined />}
@@ -64,23 +66,52 @@ export const Show: React.FC<IResourceComponentsProps> = () => {
           </React.Fragment>
         )}
       >
-        <Title level={5}>{"Id"}</Title>
-        <TextField value={ep.id} />
-
-        <Title level={5}>{"Application ID"}</Title>
-        <TextField value={doc?.id} />
-
-        <Title level={5}>{"Application Name"}</Title>
-        <TextField value={doc?.name} />
-
-        <Title level={5}>{"Name"}</Title>
-        <TextField value={ep.name} />
-
-        <Title level={5}>{"Method"}</Title>
-        <TextField value={ep.method} />
-
-        <Title level={5}>{"Uri"}</Title>
-        <TextField value={ep.uri} />
+        <Props
+          items={[
+            {
+              name: "Application ID",
+              value: doc?.id,
+            },
+            {
+              name: "Application Name",
+              value: doc?.name,
+            },
+            {
+              name: "ID",
+              value: record.id,
+            },
+            {
+              name: "Name",
+              value: record.name,
+            },
+            {
+              name: "Method",
+              value: record.method,
+            },
+            {
+              name: "Uri",
+              value: record.uri,
+            },
+            {
+              name: "Created At",
+              value: (
+                <fields.Timestamp
+                  value={record.created_at}
+                  format={configs.format.datetime}
+                />
+              ),
+            },
+            {
+              name: "Updated At",
+              value: (
+                <fields.Timestamp
+                  value={record.updated_at}
+                  format={configs.format.datetime}
+                />
+              ),
+            },
+          ]}
+        />
 
         <Title style={{ color: "#f5222d" }} level={5}>
           {"Secret"}
@@ -91,15 +122,9 @@ export const Show: React.FC<IResourceComponentsProps> = () => {
             shape="circle"
             icon={<EyeOutlined />}
             size="small"
-            onClick={() => toggle(ep.id)}
+            onClick={() => toggle(record.id)}
           />
         </Tooltip>
-
-        <Title level={5}>{"Created At"}</Title>
-        <DateField value={ep.created_at} format={configs.format.datetime} />
-
-        <Title level={5}>{"Updated At"}</Title>
-        <DateField value={ep.updated_at} format={configs.format.datetime} />
       </CoreShow>
     </Space>
   );

@@ -1,9 +1,10 @@
 import React from "react";
 import { IResourceComponentsProps, useGetIdentity } from "@refinedev/core";
 import { Card, Typography } from "antd";
-import { DateField, TextField } from "@refinedev/antd";
+import { TextField } from "@refinedev/antd";
 import { IAccount } from "@console/interfaces";
 import * as configs from "@console/configs";
+import * as fields from "@console/components/fields";
 
 const { Title } = Typography;
 
@@ -20,7 +21,11 @@ export const Account: React.FC<IResourceComponentsProps> = () => {
         <Title level={5}>{"Name"}</Title>
         <TextField value={user?.name} />
         <Title level={5}>{"Registred At"}</Title>
-        <DateField value={user?.created_at} format={configs.format.datetime} />;
+        <fields.Timestamp
+          value={user?.created_at}
+          format={configs.format.datetime}
+        />
+        ;
       </Card>
     </React.Fragment>
   );

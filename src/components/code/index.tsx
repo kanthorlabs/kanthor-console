@@ -31,7 +31,7 @@ export const Code: React.FC<{ language: Language; children: string }> = ({
   }, [copied]);
 
   return (
-    <div>
+    <div style={{ position: "relative" }}>
       <CopyToClipboard text={children} onCopy={() => setCopied(true)}>
         <Button
           style={{ position: "absolute", right: "3px", top: "3px" }}

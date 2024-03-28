@@ -1,13 +1,8 @@
 import React from "react";
-import {
-  IResourceComponentsProps,
-  BaseRecord,
-  useParsed,
-} from "@refinedev/core";
+import { IResourceComponentsProps, useParsed } from "@refinedev/core";
 import {
   useTable,
   List as CoreList,
-  DateField,
   EditButton,
   DeleteButton,
   ShowButton,
@@ -19,6 +14,7 @@ import * as constants from "@console/constants";
 import * as configs from "@console/configs";
 import * as hooks from "@console/hooks";
 import { IApplication, IEndpoint } from "@console/interfaces";
+import * as fields from "@console/components/fields";
 
 export const List: React.FC<IResourceComponentsProps> = () => {
   const { params } = useParsed<{ app_id?: string }>();
@@ -59,14 +55,24 @@ export const List: React.FC<IResourceComponentsProps> = () => {
           dataIndex={["created_at"]}
           title={"Created At"}
           render={(value: any) => {
-            return <DateField value={value} format={configs.format.datetime} />;
+            return (
+              <fields.Timestamp
+                value={value}
+                format={configs.format.datetime}
+              />
+            );
           }}
         />
         <Table.Column
           dataIndex={["updated_at"]}
           title={"Updated At"}
           render={(value: any) => {
-            return <DateField value={value} format={configs.format.datetime} />;
+            return (
+              <fields.Timestamp
+                value={value}
+                format={configs.format.datetime}
+              />
+            );
           }}
         />
         <Table.Column

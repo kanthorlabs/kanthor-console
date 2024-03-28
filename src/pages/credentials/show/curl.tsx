@@ -1,17 +1,11 @@
 import React from "react";
-import { CodeOutlined } from "@ant-design/icons";
+import BashOriginal from "devicons-react/lib/icons/BashOriginal";
 import { Code, Language } from "@console/components/code";
 import { ICredentials } from "@console/interfaces";
 import * as configs from "@console/configs";
 
 export const Key = "cURL";
-
-export const Tab = (credentials: ICredentials) => ({
-  key: Key,
-  label: Key,
-  children: <Content credentials={credentials} />,
-  icon: <CodeOutlined />,
-});
+export const Icon = <BashOriginal />;
 
 export const Content: React.FC<{ credentials: ICredentials }> = ({
   credentials,
