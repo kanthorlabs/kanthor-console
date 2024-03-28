@@ -20,7 +20,6 @@ jobs:
       - name: Test
         run: |
           bash scripts/ci_test.sh
-          # bash scripts/ci_coverage.sh
 
   prepare:
     runs-on: ubuntu-latest
