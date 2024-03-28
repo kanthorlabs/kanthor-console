@@ -3,7 +3,7 @@ import { UnlockOutlined } from "@ant-design/icons";
 import * as constants from "@console/constants";
 import { useApiUrl } from "@refinedev/core";
 import httpc from "@console/utils/httpc";
-import { Button, Modal, Typography } from "antd";
+import { Button, Modal, Typography, Alert } from "antd";
 import { IEndpoint } from "@console/interfaces";
 
 export const ViewSecretButton: React.FC<{ endpoint?: IEndpoint }> = ({
@@ -12,7 +12,7 @@ export const ViewSecretButton: React.FC<{ endpoint?: IEndpoint }> = ({
   const [loading, setLoading] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [secret, setSecret] = React.useState("");
-  const [error, setError] = React.useState<Error | undefined>();
+  const [error, setError] = React.useState<Error | null>(null);
 
   const apiUrl = useApiUrl(constants.PROVIDER_SDK);
   React.useEffect(() => {
@@ -22,8 +22,10 @@ export const ViewSecretButton: React.FC<{ endpoint?: IEndpoint }> = ({
       .get(`${apiUrl}/api/endpoint/${endpoint?.id}/secret`)
       .then((r) => {
         setSecret(r.data.secret_key);
+        setError(null);
       })
       .catch((err) => {
+        setSecret("");
         setError(err);
       })
       .finally(() => {
@@ -51,7 +53,7 @@ export const ViewSecretButton: React.FC<{ endpoint?: IEndpoint }> = ({
         onCancel={() => setOpen(false)}
       >
         {!!error && (
-          <Typography.Text>Cannot obtain the secret key</Typography.Text>
+          <Alert showIcon message="Cannot obtain the secret key" type="error" />
         )}
         {!!secret && (
           <Typography.Paragraph code copyable>
